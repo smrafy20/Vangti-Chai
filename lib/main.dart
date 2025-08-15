@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'screens/home_page.dart';
-import 'utils/constants.dart';
+import 'utils/theme_config.dart';
 
 void main() {
   runApp(const MyApp());
@@ -13,12 +13,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'VangtiChai',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: PRIMARY_COLOR,
-        ),
-      ),
+      theme: AppTheme.lightTheme,
+      darkTheme: AppTheme.darkTheme,
+      // This enables the app to follow system theme
+      themeMode: ThemeMode.system,
       home: const MyHomePage(title: 'VangtiChai'),
+      debugShowCheckedModeBanner: false,
     );
   }
 }

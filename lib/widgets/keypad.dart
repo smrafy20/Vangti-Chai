@@ -4,6 +4,9 @@ class Keypad extends StatelessWidget {
   final List<double> contextValues;
   final Function(String) onKeyPress;
   final bool isLandscape;
+  
+  // Store the global BuildContext
+  static late BuildContext _globalContext;
 
   const Keypad({
     Key? key,
@@ -14,7 +17,14 @@ class Keypad extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Store the context for later use
+    _globalContext = context;
     return isLandscape ? keypadLandscape() : keypad();
+  }
+  
+  // Method to get the global context
+  BuildContext _getGlobalContext() {
+    return _globalContext;
   }
 
   Column keypad() => Column(
@@ -98,10 +108,16 @@ class Keypad extends StatelessWidget {
   }
 
   ElevatedButton keypadButton(String digit) {
+    final context = _getGlobalContext();
+    
     if (digit == "CLEAR") {
       return ElevatedButton(
         style: ElevatedButton.styleFrom(
           padding: EdgeInsets.zero,
+          backgroundColor: digit == "CLEAR" 
+              ? Theme.of(context).colorScheme.error 
+              : Theme.of(context).colorScheme.primary,
+          foregroundColor: Theme.of(context).colorScheme.onPrimary,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
           ),
@@ -112,8 +128,12 @@ class Keypad extends StatelessWidget {
         child: FittedBox(
           fit: BoxFit.scaleDown,
           child: Text(
-            style: TextStyle(fontSize: contextValues[0], color: Colors.black),
             digit,
+            style: TextStyle(
+              fontSize: contextValues[0],
+              color: Theme.of(context).colorScheme.onPrimary,
+              fontWeight: FontWeight.bold,
+            ),
           ),
         ),
       );
@@ -121,6 +141,9 @@ class Keypad extends StatelessWidget {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
         padding: EdgeInsets.zero,
+        backgroundColor: Theme.of(context).colorScheme.primary,
+        foregroundColor: Theme.of(context).colorScheme.onPrimary,
+        elevation: 3,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12),
         ),
@@ -131,8 +154,12 @@ class Keypad extends StatelessWidget {
       child: FittedBox(
         fit: BoxFit.scaleDown,
         child: Text(
-          style: TextStyle(fontSize: contextValues[0], color: Colors.black),
           digit,
+          style: TextStyle(
+            fontSize: contextValues[0], 
+            color: Theme.of(context).colorScheme.onPrimary,
+            fontWeight: FontWeight.bold,
+          ),
         ),
       ),
     );

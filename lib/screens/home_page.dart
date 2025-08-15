@@ -55,22 +55,39 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     final contextValues = _getContextValues(context);
     final isLandscape = MediaQuery.of(context).orientation == Orientation.landscape;
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
     
     return Scaffold(
-      backgroundColor: BACKGROUND_COLOR,
+      // Use theme-provided scaffold background color
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget.title),
+        backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
+        title: Text(
+          widget.title,
+          style: TextStyle(
+            color: Theme.of(context).appBarTheme.foregroundColor,
+          ),
+        ),
       ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            FittedBox(
-              fit: BoxFit.scaleDown,
-              child: Text(
-                style: TextStyle(fontSize: contextValues[0]),
-                'Taka: $taka',
+            Card(
+              elevation: 4,
+              margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                child: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: Text(
+                    'Taka: $taka',
+                    style: TextStyle(
+                      fontSize: contextValues[0], 
+                      fontWeight: FontWeight.bold,
+                      color: Theme.of(context).textTheme.bodyMedium?.color,
+                    ),
+                  ),
+                ),
               ),
             ),
             SizedBox(height: isLandscape ? contextValues[2] / 40 : contextValues[2] / 60),
