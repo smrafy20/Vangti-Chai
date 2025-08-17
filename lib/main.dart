@@ -12,12 +12,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'VangtiChai',
+      title: 'Vangti Chai',
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
       // This enables the app to follow system theme
       themeMode: ThemeMode.system,
-      home: const MyHomePage(title: 'VangtiChai'),
+  home: const MyHomePage(title: 'Vangti Chai'),
       debugShowCheckedModeBanner: false,
     );
   }
